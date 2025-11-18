@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SPC Verify — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design.css">
+</head>
+<body>
+  <div id="app" class="theme-light">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="logo">SPC <span class="dot">Verify</span></div>
+        <button class="collapse-btn" id="collapseBtn" aria-label="Collapse sidebar">☰</button>
+      </div>
+
+      <nav class="nav">
+        <ul>
+          <li class="nav-item active" data-target="dashboard"> <span class="icon">🏠</span><span class="label">Dashboard</span></li>
+          <li class="nav-item" data-target="owners"> <span class="icon">👑</span><span class="label">Core Owners</span></li>
+          <li class="nav-item" data-target="admins"> <span class="icon">🛡️</span><span class="label">Admins</span></li>
+          <li class="nav-item" data-target="users"> <span class="icon">👥</span><span class="label">Users</span></li>
+          <li class="nav-item" data-target="pending"> <span class="icon">⏳</span><span class="label">Pending</span></li>
+          <li class="nav-item" data-target="settings"> <span class="icon">⚙️</span><span class="label">Settings</span></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn-ghost">Help</button>
+        <small class="muted">v1.0</small>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main" id="main">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="left">
+          <div class="search">
+            <input type="search" placeholder="Search users, emails, PayPal..." aria-label="Search">
+          </div>
+        </div>
+
+        <div class="right">
+          <button id="themeToggle" class="btn theme-toggle" aria-pressed="false">Dark Mode</button>
+
+          <div class="profile" id="profileBtn" tabindex="0" aria-haspopup="true" aria-expanded="false">
+            <!-- default avatar is inline SVG data URI -->
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='128' height='128'><rect width='100%25' height='100%25' fill='%234F46E5'/><text x='50%25' y='55%25' font-size='48' fill='%23FFFFFF' font-family='Arial' font-weight='700' text-anchor='middle' alignment-baseline='middle'>AH</text></svg>" alt="profile" class="avatar">
+            <div class="profile-meta">
+              <div class="name" id="headerName">Ali Hamza</div>
+              <div class="role" id="headerRole">Main Owner</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- DASHBOARD CONTENT -->
+      <section class="content" id="dashboard">
+        <div class="hero">
+          <div class="hero-left">
+            <h1>Welcome, <span class="accent">Ali</span></h1>
+            <p class="lead">Manage owners, admins and user reports — fast, secure and reliable.</p>
+          </div>
+          <div class="hero-right">
+            <div class="kpi">
+              <div class="kpi-item">
+                <div class="kpi-value" id="kpiUsers">1,520</div>
+                <div class="kpi-label">Total Users</div>
+              </div>
+              <div class="kpi-item">
+                <div class="kpi-value" id="kpiAdmins">12</div>
+                <div class="kpi-label">Admins</div>
+              </div>
+              <div class="kpi-item">
+                <div class="kpi-value" id="kpiOwners">5</div>
+                <div class="kpi-label">Core Owners</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRID -->
+        <div class="grid" id="grid">
+          <article class="card card--lg" id="card-submissions" draggable="true">
+            <div class="card-head">
+              <h3>Submissions (Last 30 days)</h3>
+              <div class="card-actions">
+                <button class="icon-btn" title="Export">⤓</button>
+                <button class="icon-btn" title="Settings">⚙️</button>
+              </div>
+            </div>
+            <div class="placeholder-chart" id="chartPlaceholder">[Chart placeholder]</div>
+          </article>
+
+          <article class="card" id="card-pending" draggable="true">
+            <h4>Pending Approvals</h4>
+            <div class="list" id="pendingList">
+              <div class="list-item"><div class="dot warn"></div> paypal-fake@mail.com <span class="muted">— 2 hrs ago</span></div>
+              <div class="list-item"><div class="dot warn"></div> scammer123 <span class="muted">— 5 hrs ago</span></div>
+              <div class="list-item"><div class="dot ok"></div> honestshop@mail.com <span class="muted">— 1d ago</span></div>
+            </div>
+          </article>
+
+          <article class="card" id="card-actions" draggable="true">
+            <h4>Recent Admin Actions</h4>
+            <div class="list small">
+              <div class="list-item">Admin Ahmed approved user <span class="muted">— 3h</span></div>
+              <div class="list-item">CoreOwner Sara removed admin <span class="muted">— 7h</span></div>
+            </div>
+          </article>
+
+          <article class="card" id="card-quick" draggable="true">
+            <h4>Quick Actions</h4>
+            <div class="actions">
+              <button class="btn primary" id="addScammerBtn">Add Scammer</button>
+              <button class="btn ghost" id="exportCSV">Export CSV</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- other sections placeholders -->
+      <section id="owners" class="content" style="display:none"><h2>Core Owners</h2></section>
+      <section id="admins" class="content" style="display:none"><h2>Admins</h2></section>
+      <section id="users" class="content" style="display:none"><h2>Users</h2></section>
+      <section id="pending" class="content" style="display:none"><h2>Pending</h2></section>
+      <section id="settings" class="content" style="display:none"><h2>Settings</h2></section>
+    </main>
+
+    <!-- PROFILE POPUP (hidden initially) -->
+    <div class="popup" id="profilePopup" role="dialog" aria-hidden="true">
+      <div class="popup-card" role="document">
+        <div class="popup-head">
+          <h3>Edit Profile</h3>
+          <button class="close" id="closePopup" aria-label="Close profile editor">✕</button>
+        </div>
+        <div class="popup-body">
+          <div class="avatar-edit">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='128' height='128'><rect width='100%25' height='100%25' fill='%234F46E5'/><text x='50%25' y='55%25' font-size='48' fill='%23FFFFFF' font-family='Arial' font-weight='700' text-anchor='middle' alignment-baseline='middle'>AH</text></svg>" id="popupAvatar" alt="avatar" class="avatar-lg">
+            <div class="avatar-controls">
+              <label class="upload-btn">
+                Change
+                <input type="file" id="avatarInput" accept="image/*">
+              </label>
+              <button class="btn ghost" id="removeAvatar">Remove</button>
+            </div>
+          </div>
+
+          <label>Full name</label>
+          <input id="inpName" type="text" value="Ali Hamza" autocomplete="name">
+          <label>Email</label>
+          <input id="inpEmail" type="email" value="ali@example.com" autocomplete="email">
+
+          <label>Change Password (optional)</label>
+          <input id="inpPass" type="password" placeholder="Current password" autocomplete="current-password">
+          <input id="inpPassNew" type="password" placeholder="New password" autocomplete="new-password">
+        </div>
+
+        <div class="popup-foot">
+          <button id="saveProfile" class="btn primary">Save changes</button>
+          <button id="cancelProfile" class="btn ghost">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOASTS -->
+    <div class="toasts" id="toasts"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
